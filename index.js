@@ -1,12 +1,17 @@
 require('http')
 .Server((req, res) => {
 
+function task(x) {
+    return x * this * this;
+}
+
 const CORS = {
-'Access-Control-Allow-Origin': '*',
-'X-Author': 'alexmavlyanov95'
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'text/plain; charset=UTF-8'
 };
 res.writeHead(200, CORS);
-if (req.url === '/') return res.end('alexmavlyanov95');
+if (req.url === '/login/') return res.end('alexmavlyanov95');
+if (req.url === '/sample/') return res.end('alexmavlyanov95');
 res.end('test');
 })
 .listen(process.env.PORT);
