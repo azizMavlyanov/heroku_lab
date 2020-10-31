@@ -3,12 +3,10 @@ require('http')
 
 const CORS = {
 'Access-Control-Allow-Origin': '*',
-'Access-Control-Allow-Methods': 'GET,POST,DELETE',
-'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers'
+'X-Author': 'alexmavlyanov95'
 };
 res.writeHead(200, CORS);
-if (req.url === '/v8') return res.end('6.8.275.32-node.55');
-if (req.url === '/login') return res.end('azizMavlyanov');
+if (req.url === '/') return res.end('alexmavlyanov95');
 res.end('test');
 })
 .listen(process.env.PORT);
