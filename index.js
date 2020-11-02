@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 
 app.all('/result4/', (req, res) => {
   
-  const x_test = req.header["x-test"];
+  const x_test = req.headers["x-test"];
 
   console.log(req.body);
 
