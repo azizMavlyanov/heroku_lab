@@ -47,14 +47,14 @@ app.use(bodyParser.json());
 
 app.all('/result4/', (req, res) => {
   
-  const x_test = req.get('x-test');
+  const x_test = req.header["x-test"];
 
   console.log(req.body);
 
   if (x_test) {
     res.setHeader("Content-Type", "application/json")
     res.header("Access-Control-Allow-Headers", "x-text");
-    res.json({message: "alexmavlyanov95", "x-result": x_test, "x-body": req.body});
+    res.json({message: "alexmavlyanov95", "x-result": x_test, "x-body": JSON.stringify(req.body)});
   }
 
   res.json({message: "alexmavlyanov95"});
