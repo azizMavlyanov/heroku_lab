@@ -53,7 +53,8 @@ app.all('/result4/', (req, res) => {
 
   if (x_test && req.body) {
     res.header("Access-Control-Allow-Headers", "x-text, x-test");
-    res.setHeader("Content-Type", "application/json")
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Accept", "application/json")
     res.json({message: "alexmavlyanov95", "x-result": x_test.toString(), "x-body": req.body});
   } else {
     res.header("Access-Control-Allow-Headers", "x-text, x-test");
