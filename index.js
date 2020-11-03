@@ -52,7 +52,7 @@ app.all('/result4/', (req, res) => {
   console.log(req.body);
 
   if (x_test) {
-    res.header("Access-Control-Allow-Headers", "x-text");
+    res.header("Access-Control-Allow-Headers", "x-text, x-test");
     res.setHeader("Content-Type", "application/json")
     res.json({message: "alexmavlyanov95", "x-result": x_test.toString(), "x-body": req.body});
   }
@@ -68,7 +68,7 @@ app.all('/result4', (req, res) => {
 
 
   if (x_test) {
-    req.header("Access-Control-Allow-Headers", "x-text, x-test");
+    res.header("Access-Control-Allow-Headers", "x-text, x-test");
     res.setHeader("Content-Type", "application/json")
     res.json({message: "alexmavlyanov95", "x-result": x_test.toString(), "x-body": req.body});
   }
