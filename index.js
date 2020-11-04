@@ -42,24 +42,35 @@ const publicPath = path.join(__dirname);
 const port = process.env.PORT || 3000;
 
 app.use(cors());
+
+app.use(function(req, res, next) {
+  req.rawBody = '';
+  req.setEncoding('utf8');
+
+  req.on('data', function(chunk) { 
+    req.rawBody += chunk;
+  });
+
+  req.on('end', function() {
+    next();
+  });
+});
 app.use(bodyParser.json());
-// app.use(express.static(publicPath));
 
 app.all('/result4/', (req, res) => {
   
   const x_test = req.headers["x-test"];
 
-  console.log(req.body);
+  console.log(req.rawBody);
 
-  if (x_test && req.body) {
-    res.header("Access-Control-Allow-Headers", "x-text, x-test");
+  if (x_test && req.rawBody) {
     res.setHeader("Content-Type", "application/json");
-    res.setHeader("Accept", "application/json")
-    res.json({message: "alexmavlyanov95", "x-result": x_test.toString(), "x-body": req.body});
+    res.header("Access-Control-Allow-Headers", "x-text, x-test, Content-Type");
+    res.json({message: "alexmavlyanov95", "x-result": x_test, "x-body": req.rawBody});
   } else {
+    res.setHeader("Content-Type", "application/json");
     res.header("Access-Control-Allow-Headers", "x-text, x-test");
-    res.setHeader("Content-Type", "application/json")
-    res.json({message: "alexmavlyanov95", "x-result": x_test.toString()});
+    res.json({message: "alexmavlyanov95", "x-result": x_test});
   }
 
   res.json({message: "alexmavlyanov95"});
@@ -68,23 +79,23 @@ app.all('/result4/', (req, res) => {
 
 app.all('/result4', (req, res) => {
   
-  const x_test = req.get('x-test');
+  const x_test = req.headers["x-test"];
 
+  console.log(req.rawBody);
 
-
-  if (x_test) {
+  if (x_test && req.rawBody) {
+    res.setHeader("Content-Type", "application/json");
+    res.header("Access-Control-Allow-Headers", "x-text, x-test, Content-Type");
+    res.json({message: "alexmavlyanov95", "x-result": x_test, "x-body": req.rawBody});
+  } else {
+    res.setHeader("Content-Type", "application/json");
     res.header("Access-Control-Allow-Headers", "x-text, x-test");
-    res.setHeader("Content-Type", "application/json")
-    res.json({message: "alexmavlyanov95", "x-result": x_test.toString(), "x-body": req.body});
+    res.json({message: "alexmavlyanov95", "x-result": x_test});
   }
 
   res.json({message: "alexmavlyanov95"});
 
 });
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(publicPath, 'index.html'));
-// });
 
 app.listen(port, () => {
   console.log('Server is up!');
