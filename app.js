@@ -1,6 +1,6 @@
 import cors from 'cors';
 
-export default function getApp(express, bodyParser, fs, crypto, http) {
+export default function getApp(express, bodyParser, fs, crypto, https) {
     let app = express();
     app.use(bodyParser.json());
     app.use(cors());
@@ -24,10 +24,11 @@ export default function getApp(express, bodyParser, fs, crypto, http) {
 
     app.all('/req/', (req, res) => {
         let {addr} = req.query;
-        http.get(addr, (response) => {
+        https.get(addr, (response) => {
             const { statusCode } = response;
             const contentType = response.headers['content-type'];
 
+            console.log(addr);
 
             response.setEncoding('utf8');
             let rawData = '';
