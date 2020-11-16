@@ -22,6 +22,7 @@ export default function getApp(express, bodyParser, fs, crypto, https) {
 
     app.all('/sha1/:input/', (req, res) => {
         let {input} = req.params;
+        res.setHeader('content-type', 'text/plain');
         res.send(crypto.createHash('sha1').update(JSON.stringify(input)).digest('hex'));
     });
 
