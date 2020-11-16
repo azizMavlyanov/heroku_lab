@@ -1,9 +1,12 @@
-import cors from 'cors';
+// import cors from 'cors';
 
 export default function getApp(express, bodyParser, fs, crypto, https) {
     let app = express();
     app.use(bodyParser.json());
-    app.use(cors());
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*"); 
+        res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+        next()});
     
     app.all('/login/', (req, res) => {
         res.send('alexmavlyanov95');
