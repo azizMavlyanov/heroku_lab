@@ -22,8 +22,16 @@ export default function getApp(express, bodyParser, fs, crypto, https) {
         res.send(crypto.createHash('sha1').update(JSON.stringify(input)).digest('hex'));
     });
 
+    app.post('/req/', (req, res)) {
+        res.send(req.body.addr)
+    };
+
     app.all('/req/', (req, res) => {
         let {addr} = req.query;
+        if (req.body.addr) {
+            addr = req.body.addr;
+        }
+
         https.get(addr, (response) => {
             const { statusCode } = response;
             const contentType = response.headers['content-type'];
