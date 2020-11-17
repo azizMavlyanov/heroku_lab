@@ -1,4 +1,4 @@
-export default function getApp(express, bodyParser, fs, crypto, https) {
+export default function(express, bodyParser, fs, crypto, http) {
     let app = express();
     app.use(bodyParser.json());
     app.use(function(req, res, next) {
@@ -30,7 +30,7 @@ export default function getApp(express, bodyParser, fs, crypto, https) {
             addr = req.body.addr;
         }
 
-        https.get(addr, (response) => {
+        http.get(addr, (response) => {
             response.setEncoding('utf8');
             let rawData = '';
             response.on('data', (chunk) => { rawData += chunk; });
