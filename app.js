@@ -6,11 +6,11 @@ export default function(express, bodyParser, fs, crypto, http) {
         res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
         next()});
     
-    app.all('/login/', (req, res) => {
+    app.get('/login/', (req, res) => {
         res.send('alexmavlyanov95');
     });
 
-    app.all('/code/', (req, res) => {
+    app.get('/code/', (req, res) => {
         let pathToFile = import.meta.url.substring(7);
 
         fs.readFile(pathToFile, (err, data) => {
@@ -18,17 +18,16 @@ export default function(express, bodyParser, fs, crypto, http) {
         })
     });
 
-    app.all('/sha1/:input/', (req, res) => {
+    app.get('/sha1/:input/', (req, res) => {
         let {input} = req.params;
         res.setHeader('content-type', 'text/plain');
         res.send(crypto.createHash('sha1').update(input).digest('hex'));
     });
 
-    app.all('/req', (req, res) => {
+    app.get('/req', (req, res) => {
+        res.setHeader('content-type', 'text/plain');
+
         let {addr} = req.query;
-        if (req.method === "POST" && req.body.addr) {
-            addr = req.body.addr;
-        }
 
         http.get(addr, (response) => {
             response.setEncoding('utf8');
@@ -48,6 +47,31 @@ export default function(express, bodyParser, fs, crypto, http) {
             });
         
     });
+
+    app.post('/req', (req, res) => {
+        res.setHeader('content-type', 'text/plain');
+
+        if (req.body.addr) {
+            addr = req.body.addr;
+        }
+
+        http.get(addr, (response) => {
+            response.setEncoding('utf8');
+            let rawData = '';
+            response.on('data', (chunk) => { rawData += chunk; });
+            response.on('end', () => {
+                try {
+                const parsedData = JSON.parse(rawData);
+                console.log(parsedData);
+                res.send(JSON.stringify(parsedData));
+                } catch (e) {
+                console.error(e.message);
+                }
+            });
+            }).on('error', (e) => {
+            console.error(`Got error: ${e.message}`);
+            });
+    })
 
     app.all('*', (req, res) => {
         res.send('alexmavlyanov95');
