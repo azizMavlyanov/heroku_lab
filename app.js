@@ -1,5 +1,3 @@
-// import cors from 'cors';
-
 export default function getApp(express, bodyParser, fs, crypto, https) {
     let app = express();
     app.use(bodyParser.json());
@@ -28,16 +26,11 @@ export default function getApp(express, bodyParser, fs, crypto, https) {
 
     app.all('/req/', (req, res) => {
         let {addr} = req.query;
-        if (req.body.addr) {
+        if (req.method === "POST" && req.body.addr) {
             addr = req.body.addr;
         }
 
         https.get(addr, (response) => {
-            const { statusCode } = response;
-            const contentType = response.headers['content-type'];
-
-            console.log(addr);
-
             response.setEncoding('utf8');
             let rawData = '';
             response.on('data', (chunk) => { rawData += chunk; });
