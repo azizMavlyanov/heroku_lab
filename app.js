@@ -51,9 +51,7 @@ export default function(express, bodyParser, fs, crypto, http) {
     app.post('/req', (req, res) => {
         res.setHeader('content-type', 'text/plain');
 
-        if (req.body.addr) {
-            addr = req.body.addr;
-        }
+        let addr = req.body.addr;
 
         http.get(addr, (response) => {
             response.setEncoding('utf8');
