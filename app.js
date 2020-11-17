@@ -24,7 +24,7 @@ export default function(express, bodyParser, fs, crypto, http) {
         res.send(crypto.createHash('sha1').update(input).digest('hex'));
     });
 
-    app.all('/req/', (req, res) => {
+    app.all('/req', (req, res) => {
         let {addr} = req.query;
         if (req.method === "POST" && req.body.addr) {
             addr = req.body.addr;
