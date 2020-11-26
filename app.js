@@ -2,6 +2,7 @@ export default (express, bodyParser, fs, crypto, http, mongodb) => {
     const app = express();
 
     app.use(bodyParser.json());
+    app.use(express.urlencoded());
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
