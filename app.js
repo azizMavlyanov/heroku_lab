@@ -22,7 +22,7 @@ export default (express, bodyParser, fs, crypto, http, mongodb) => {
             try {
                 await client.connect();
 
-                const database = client.db('mongodemo');
+                const database = client.db('readusers');
                 const collection = database.collection('users');
                 const doc = { login: login, password: password };
                 const result = await collection.insertOne(doc);
