@@ -11,7 +11,7 @@ export default (express, bodyParser, fs, crypto, http, MongoClient) => {
 
 
     app
-        .get('/insert/', async (req, res) => {
+        .post('/insert/', async (req, res) => {
             const {login, password, URL} = req.body;
 
             console.log(URL);
