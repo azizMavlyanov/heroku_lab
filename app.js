@@ -1,4 +1,4 @@
-export default (express, bodyParser, fs, crypto, http, MongoClient) => {
+export default (express, bodyParser, fs, crypto, http, mongodb) => {
     const app = express();
 
     app.use(bodyParser.json());
@@ -16,7 +16,7 @@ export default (express, bodyParser, fs, crypto, http, MongoClient) => {
 
             console.log(URL);
 
-            const client = new MongoClient(URL);
+            const client = new mongodb.MongoClient(URL);
 
             try {
                 await client.connect();
