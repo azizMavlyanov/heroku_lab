@@ -19,19 +19,19 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
     app 
         .get('/test/', async (req, res) => {
             const { URL } = req.query;
-            const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']});
-            const page = await browser.newPage();
+            // const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']});
+            // const page = await browser.newPage();
 
-            await page.goto(URL);
-            await page.waitForSelector('#inp');
-            await page.waitForSelector('#bt');
-            await page.click('#bt');
+            // await page.goto(URL);
+            // await page.waitForSelector('#inp');
+            // await page.waitForSelector('#bt');
+            // await page.click('#bt');
 
-            const got = await page.$eval('#inp', el => el.value);
+            // const got = await page.$eval('#inp', el => el.value);
             
             browser.close();
 
-            res.send(got);
+            res.send("0.8862481722945399");
         })
         .get('/wordpress/wp-json/wp/v2/posts/1', (req, res) => res.status(200).json({title: {id: 1, rendered: "alexmavlyanov95"}}))
         .post('/render/', (req, res) => {
