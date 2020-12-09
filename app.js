@@ -19,19 +19,24 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
     app 
         .get('/test/', async (req, res) => {
             const { URL } = req.query;
-            const browser = await puppeteer.launch({executablePath: './node_modules/puppeteer/.local-chromium/linux-818858/chrome-linux/chrome', headless: true, args:['--no-sandbox', '--disable-setuid-sandbox']});
-            const page = await browser.newPage();
-
-            await page.goto(URL);
-            await page.waitForSelector('#inp');
-            await page.waitForSelector('#bt');
-            await page.click('#bt');
-
-            const gotResponse = await page.$eval('#inp', el => el.value);
             
-            browser.close();
+            try {
+                const browser = await puppeteer.launch({headless: true, args:['--no-sandbox', '--disable-setuid-sandbox']});
+                const page = await browser.newPage();
 
-            res.send(gotResponse);
+                await page.goto(URL);
+                await page.waitForSelector('#inp');
+                await page.waitForSelector('#bt');
+                await page.click('#bt');
+
+                const gotResponse = await page.$eval('#inp', el => el.value);
+                
+                browser.close();
+
+                res.send(gotResponse);
+            } catch (e) {
+                console.log(e);
+            }
             
             // res.setHeader('content-type', 'text/plain');
             // res.send("0.8862481722945399");
