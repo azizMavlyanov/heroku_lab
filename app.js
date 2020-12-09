@@ -1,4 +1,4 @@
-export default (express, bodyParser, fs, crypto, http, mongodb, path, cors) => {
+export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, puppeteer) => {
     const app = express();
     const __dirname = path.resolve();
     app.set('view engine', 'pug');
@@ -17,6 +17,20 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors) => {
     app.options('*', cors());
 
     app 
+        .get('/test/', async (req, res) => {
+            const { URL } = req.query;
+            const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']});
+            const page = await browser.newPage();
+
+            await page.goto(URL);
+            await page.waitForSelector('#inp');
+            await page.waitForSelector('#bt');
+            await page.click('#bt');
+
+            const got = await page.$eval('#inp', el => el.value);
+
+            res.send(got);
+        })
         .get('/wordpress/wp-json/wp/v2/posts/1', (req, res) => res.status(200).json({title: {id: 1, rendered: "alexmavlyanov95"}}))
         .post('/render/', (req, res) => {
             const {random2, random3} = req.body;
