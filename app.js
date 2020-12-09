@@ -27,11 +27,11 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
             await page.waitForSelector('#bt');
             await page.click('#bt');
 
-            const got = await page.$eval('#inp', el => el.value);
+            const gotResponse = await page.$eval('#inp', el => el.value);
             
             browser.close();
 
-            res.send(got);
+            res.send(gotResponse);
         })
         .get('/wordpress/wp-json/wp/v2/posts/1', (req, res) => res.status(200).json({title: {id: 1, rendered: "alexmavlyanov95"}}))
         .post('/render/', (req, res) => {
