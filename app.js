@@ -32,7 +32,7 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path) => {
                     try {
                         const parsedData = JSON.parse(rawData);
                         console.log(parsedData);
-                        res.render(JSON.stringify(parsedData), {random2: random2, random3: random3});
+                        res.render('random', {random2: random2, random3: random3, login: "alexmavlyanov95"});
                     } catch (e) {
                         console.error(e.message);
                     }
