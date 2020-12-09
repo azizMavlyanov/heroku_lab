@@ -31,9 +31,9 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
 
                 const gotResponse = await page.$eval('#inp', el => el.value);
                 
+                res.send(gotResponse);
                 browser.close();
 
-                res.send(gotResponse);
             } catch (e) {
                 console.log(e);
             }
