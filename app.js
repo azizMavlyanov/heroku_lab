@@ -22,8 +22,10 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path) => {
 
 
             let { addr } = req.query;
+
+            console.log(addr);
             
-            res.render('random', {random2: random2, random3: random3, login: "alexmavlyanov95"});
+            res.render('random', {random2: random2, random3: random3,});
 
 
             // http.get(addr, (response) => {
