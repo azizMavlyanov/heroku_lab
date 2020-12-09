@@ -21,7 +21,11 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
             const { URL } = req.query;
             
             try {
-                const browser = await puppeteer.launch({headless: true, args:['--no-sandbox', '--disable-setuid-sandbox']});
+                // const browser = await puppeteer.launch({headless: true,
+                //                                         args:['--no-sandbox', '--disable-setuid-sandbox']});
+
+                const browser = await puppeteer.launch();
+    
                 const page = await browser.newPage();
 
                 await page.goto(URL);
