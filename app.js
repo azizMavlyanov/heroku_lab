@@ -1,5 +1,9 @@
-export default (express, bodyParser, fs, crypto, http, mongodb) => {
+export default (express, bodyParser, fs, crypto, http, mongodb, path) => {
     const app = express();
+    const __dirname = path.resolve();
+    app.set('view engine', 'pug');
+    app.set('views', path.join(__dirname, 'public'));
+    app.use(express.static(path.join(__dirname, 'public')));
 
     app.use(bodyParser.json());
     app.use(express.urlencoded());
@@ -11,7 +15,32 @@ export default (express, bodyParser, fs, crypto, http, mongodb) => {
 
 
 
-    app
+    app 
+        .post('/render/', async (req, res) => {
+            const {random2, random3} = req.body;
+
+            res.setHeader('content-type', 'text/plain');
+
+            let { addr } = req.query;
+
+            http.get(addr, (response) => {
+                response.setEncoding('utf8');
+                let rawData = '';
+                response.on('data', (chunk) => { rawData += chunk; });
+                response.on('end', () => {
+                    try {
+                        const parsedData = JSON.parse(rawData);
+                        console.log(parsedData);
+                        res.render(JSON.stringify(parsedData), {random2: random2, random3: random3});
+                    } catch (e) {
+                        console.error(e.message);
+                    }
+                });
+            }).on('error', (e) => {
+                console.error(`Got error: ${e.message}`);
+            });
+        })
+        .get('/wordpress/', (req, res) => res.status(200).render('wordpress'))
         .post('/insert/', async (req, res) => {
             const {login, password, URL} = req.body;
 
