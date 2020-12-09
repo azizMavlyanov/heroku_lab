@@ -29,7 +29,7 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
 
             // const got = await page.$eval('#inp', el => el.value);
             
-            browser.close();
+            // browser.close();
 
             res.send("0.8862481722945399");
         })
