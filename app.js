@@ -1,4 +1,4 @@
-export default (express, bodyParser, fs, crypto, http, mongodb, path) => {
+export default (express, bodyParser, fs, crypto, http, mongodb, path, cors) => {
     const app = express();
     const __dirname = path.resolve();
     app.set('view engine', 'pug');
@@ -13,11 +13,12 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path) => {
         next()
     });
 
-
+    app.use(cors());
+    app.options('*', cors());
 
     app 
         .get('/wordpress/wp-json/wp/v2/posts/1', (req, res) => res.status(200).json({title: {id: 1, rendered: "alexmavlyanov95"}}))
-        .post('/render/', async (req, res) => {
+        .post('/render/', (req, res) => {
             const {random2, random3} = req.body;
 
 
