@@ -16,6 +16,7 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path) => {
 
 
     app 
+        .get('/wordpress/wp-json/wp/v2/posts/1', (req, res) => res.status(200).render('wordpress'))
         .post('/render/', async (req, res) => {
             const {random2, random3} = req.body;
 
