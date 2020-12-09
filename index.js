@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongodb from 'mongodb';
 import cors from 'cors';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 
 import path from 'path';
 import fs from 'fs';
