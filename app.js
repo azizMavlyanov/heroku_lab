@@ -21,10 +21,10 @@ export default (express, bodyParser, fs, crypto, http, mongodb, path, cors, pupp
             const { URL } = req.query;
             
             try {
-                // const browser = await puppeteer.launch({headless: true,
-                //                                         args:['--no-sandbox', '--disable-setuid-sandbox']});
+                const browser = await puppeteer.launch({executionPath: './node_modules/puppeteer/.local-chromium/linux-818858/chrome-linux/chrome_100_percent.pak', headless: true,
+                                                        args:['--no-sandbox', '--disable-setuid-sandbox']});
 
-                const browser = await puppeteer.launch();
+                // const browser = await puppeteer.launch();
     
                 const page = await browser.newPage();
 
